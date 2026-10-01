@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas 2 - Data Pegawai</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            background-color: #f8f9fa;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+            text-align: center;
+        }
+        tfoot tr {
+            background-color: #e9ecef;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Daftar Rincian Gaji Pegawai</h2>
+
+    <script>
+        // DEKLARASI VARIABEL INPUT (Sesuai Soal)
+        let nama = "Dodi Prayodi";
+        let umur = 25;
+        let jabatan = "Manajer"; // Pilihan: Manajer, Asisten Manajer, Staff
+        let status = "Menikah";  // Pilihan: Menikah, Belum Menikah
+
+        // PROSES LOGIKA (IF-ELSE & TERNARY)
+        let gajiPokok = 0;
+
+        // Logika IF-ELSE untuk menentukan Gaji Pokok berdasarkan Jabatan
+        if (jabatan.toLowerCase() === "manajer") {
+            gajiPokok = 15000000;
+        } else if (jabatan.toLowerCase() === "asisten manajer") {
+            gajiPokok = 10000000;
+        } else if (jabatan.toLowerCase() === "staff") {
+            gajiPokok = 5000000;
+        } else {
+            gajiPokok = 0;
+        }
+
+        // Perhitungan Tunjangan Jabatan & BPJS dari Gaji Pokok
+        let tunjJabatan = 0.15 * gajiPokok; // 15% dari gapok
+        let bpjs = 0.10 * gajiPokok;         // 10% dari gapok
+
+        // Logika TERNARY OPERATOR untuk Tunjangan Keluarga
+        // Jika status "menikah", dapat 20% dari gapok. Jika tidak, 0.
+        let tunjKeluarga = (status.toLowerCase() === "menikah") ? (0.20 * gajiPokok) : 0;
+
+        // Total Gaji (Jumlahkan seluruh elemen penerimaan gaji)
+        let totalGaji = gajiPokok + tunjJabatan + bpjs + tunjKeluarga;
+
+        // Fungsi pembantu untuk format Rupiah
+        function formatRupiah(angka) {
+            return "Rp " + angka.toLocaleString("id-ID");
+        }
+
+        // CETAK TABEL DENGAN DOCUMENT.WRITE
+        document.write("<table>");
+        
+        // Judul Kolom menggunakan <thead>
+        document.write("<thead>");
+        document.write("  <tr>");
+        document.write("    <th>Nama Pegawai</th>");
+        document.write("    <th>Umur</th>");
+        document.write("    <th>Jabatan</th>");
+        document.write("    <th>Status</th>");
+        document.write("    <th>Gaji Pokok</th>");
+        document.write("    <th>Tunjangan Jabatan (15%)</th>");
+        document.write("    <th>BPJS (10%)</th>");
+        document.write("    <th>Tunjangan Keluarga (20%)</th>");
+        document.write("  </tr>");
+        document.write("</thead>");
+
+        // Isi data menggunakan <tbody>
+        document.write("<tbody>");
+        document.write("  <tr>");
+        document.write("    <td>" + nama + "</td>");
+        document.write("    <td>" + umur + " Tahun</td>");
+        document.write("    <td>" + jabatan + "</td>");
+        document.write("    <td>" + status + "</td>");
+        document.write("    <td>" + formatRupiah(gajiPokok) + "</td>");
+        document.write("    <td>" + formatRupiah(tunjJabatan) + "</td>");
+        document.write("    <td>" + formatRupiah(bpjs) + "</td>");
+        document.write("    <td>" + formatRupiah(tunjKeluarga) + "</td>");
+        document.write("  </tr>");
+        document.write("</tbody>");
+
+        // Total Gaji menggunakan <tfoot>
+        document.write("<tfoot>");
+        document.write("  <tr>");
+        document.write("    <td colspan='7' style='text-align: right;'><b>Total Gaji Terima:</b></td>");
+        document.write("    <td><b>" + formatRupiah(totalGaji) + "</b></td>");
+        document.write("  </tr>");
+        document.write("</tfoot>");
+
+        document.write("</table>");
+    </script>
+
+</body>
+</html>
