@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <title>Manajemen Produk</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 20px auto; padding: 20px; }
+        form { display: flex; gap: 10px; margin-bottom: 20px; }
+        input { padding: 8px; flex: 1; }
+        button { padding: 8px 15px; cursor: pointer; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #f4f4f4; }
+        .btn-hapus { background: #dc3545; color: white; border: none; }
+    </style>
+</head>
+<body>
+
+    <h2>Manajemen Produk Toko</h2>
+
+    <form id="formProduk">
+        <input type="number" id="inputId" placeholder="ID" required>
+        <input type="text" id="inputNama" placeholder="Nama Produk" required>
+        <input type="number" id="inputHarga" placeholder="Harga" required>
+        <button type="submit">Tambah</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nama</th>
+                <th>Harga</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody id="tabelBody"></tbody>
+    </table>
+
+    <script>
+        let produkList = [
+            { id: 1, nama: "Laptop", harga: 12000000 },
+            { id: 2, nama: "Smartphone", harga: 5000000 },
+            { id: 3, nama: "Smartwatch", harga: 2000000 },
+            { id: 4, nama: "Keyboard", harga: 500000 },
+            { id: 5, nama: "Mouse", harga: 300000 }
+        ];
+
+        const eventHandler = {
+            tambahProduk: function (...data) {
+                const [id, nama, harga] = data;
+                produkList = [...produkList, { id: Number(id), nama, harga: Number(harga) }];
+                this.tampilkanProduk();
+            },
+
+            hapusProduk: function (id) {
+                produkList = produkList.filter(p => p.id !== id);
+                this.tampilkanProduk();
+            },
+
+            tampilkanProduk: function () {
+                const tabelBody = document.getElementById("tabelBody");
+                tabelBody.innerHTML = "";
+
+                produkList.forEach(({ id, nama, harga }) => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${id}</td>
+                        <td>${nama}</td>
+                        <td>Rp ${harga.toLocaleString('id-ID')}</td>
+                        <td><button class="btn-hapus" data-id="${id}">Hapus</button></td>
+                    `;
+                    tabelBody.appendChild(row);
+                });
+            }
+        };
+
+        document.getElementById("formProduk").addEventListener("submit", function (e) {
+            e.preventDefault();
+            const id = document.getElementById("inputId").value;
+            const nama = document.getElementById("inputNama").value;
+            const harga = document.getElementById("inputHarga").value;
+
+            eventHandler.tambahProduk(id, nama, harga);
+            this.reset();
+        });
+
+        document.getElementById("tabelBody").addEventListener("click", function (e) {
+            if (e.target.classList.contains("btn-hapus")) {
+                const id = Number(e.target.getAttribute("data-id"));
+                eventHandler.hapusProduk(id);
+            }
+        });
+
+        eventHandler.tampilkanProduk();
+    </script>
+</body>
+</html>
