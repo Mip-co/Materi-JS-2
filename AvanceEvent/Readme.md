@@ -7,3 +7,5 @@
 
 ### Cara Menjalankan
 Buka file `index.html` secara langsung di browser atau gunakan ekstensi **Live Server** di VS Code.
+
+![Hasil Tampilan Program](hasil.png)
